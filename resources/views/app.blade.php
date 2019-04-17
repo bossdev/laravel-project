@@ -6,11 +6,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         @include('layouts.header_css')
+        @yield('css')
     </head>
     <body>
-        @include('layouts.header_menu')
+        @yield('menubar')
         @yield('content')
-        @include('layouts.footer')
+        @yield('footer')
 
         @include('layouts.scripts')
     </body>

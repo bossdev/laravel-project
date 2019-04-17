@@ -36924,8 +36924,7 @@ if (token) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-$(function () {
-  $("div").fadeOut(3000);
+$(function () {// $("div").fadeOut(3000);
 });
 
 /***/ }),

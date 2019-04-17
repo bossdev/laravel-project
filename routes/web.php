@@ -11,10 +11,16 @@
 |
 */
 
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home.index');
 
 Route::get('/listProject','ProjectController@list')->name('listProject');
+Route::get('/login','Auth\LoginController@getLoginPage')->name('get.login');
+Route::get('/register', function () {
+    return view('auth.register');
+});
+Route::get('/test','ProjectController@getTest')->name('get.test');
 
 Route::get('/boss', function () {
     return 'hello boss za';
 });
+Auth::routes();
