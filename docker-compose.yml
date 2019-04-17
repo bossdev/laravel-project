@@ -1,0 +1,21 @@
+version: "3"
+services:
+  project_n_app:
+    build: .
+    ports:
+      - 80:80
+    # volumes:
+    #   - ".:/var/www/html"
+    restart: always
+  project_n_mysql:
+    image: mysql:5.7
+    ports:
+      - 3306:3306
+    volumes:
+      - project_n_mysql_volume:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+    restart: always
+volumes:
+  project_n_mysql_volume:
+    driver: local
