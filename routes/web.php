@@ -11,16 +11,21 @@
 |
 */
 
-Route::get('/', 'HomeController@index')->name('home.index');
-
-Route::get('/listProject','ProjectController@list')->name('listProject');
-Route::get('/login','Auth\LoginController@getLoginPage')->name('get.login');
-Route::get('/register', function () {
-    return view('auth.register');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/', 'HomeController@index')->name('home.index');
+    // Route::get('/listProject','ProjectController@list')->name('listProject');
+    Route::get('/listProject','ProjectController@list')->name('listProject');
+    Route::get('/logout', function () {
+        Auth::logout();
+        return redirect('/');
+    });
 });
-Route::get('/test','ProjectController@getTest')->name('get.test');
-
-Route::get('/boss', function () {
-    return 'hello boss za';
+Route::get('/test','ProjectController@getTest')->name('get.test');  
+// Auth route
+Route::middleware(['guest'])->group(function () {
+    Route::get('/register', function () {
+        return view('auth.register');
+    });
+    // Route::post('/register','Auth\RegisterController@postRegister');
+    Auth::routes();
 });
-Auth::routes();

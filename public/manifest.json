@@ -1,0 +1,18 @@
+{
+    "short_name": "Dog app",
+    "name": "Page Dog Project N",
+    "description":"Page for dog najaaaaaaaa",
+    "icons": [
+      {
+        "src": "images/palm.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ],
+    "start_url": "/",
+    "display": "fullscreen",
+    "orientation": "landscape",
+    "background_color": "#eee",
+    "theme_color": "#777",
+    "prefer_related_applications": false
+  }

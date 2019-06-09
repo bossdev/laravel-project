@@ -10700,6 +10700,16 @@ a.text-dark:focus {
   margin: 70px auto;
 }
 
+#wrapBoxRegister {
+  width: 500px;
+  margin: 70px auto;
+}
+
+.sticky-footer {
+  position: relative;
+  bottom: 0;
+}
+
 
 
 /*!

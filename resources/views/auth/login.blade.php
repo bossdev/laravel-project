@@ -16,8 +16,14 @@
                 <b class="align-middle">Project N</b>
             </h1>
             <h4 class="text-center mb-3">Log in to continue</h4>
-            <form id="formLogin">
-                <input type="text" class="form-control mb-2" name="username" placeholder="Username" />
+            <form id="formLogin" method="post" action="{{ url('login') }}">
+                @csrf
+                @if ($errors->has('email'))
+                    <span class="invalid-feedback d-block" role="alert">
+                        <strong>{{ $errors->first('email') }}</strong>
+                    </span>
+                @endif
+                <input type="text" class="form-control mb-2" name="email" placeholder="Username" />
                 <input type="password" class="form-control mb-2" name="password" placeholder="Password" />
                 <button type="submit" class="btn btn-dark btn-block">Login</button>
             </form>

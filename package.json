@@ -25,6 +25,9 @@
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.8.1",
-        "font-awesome": "^4.7.0"
+        "font-awesome": "^4.7.0",
+        "jquery-validation": "^1.19.0",
+        "moment": "^2.24.0",
+        "validator": "^11.0.0"
     }
 }
