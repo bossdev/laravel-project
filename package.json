@@ -28,6 +28,7 @@
         "font-awesome": "^4.7.0",
         "jquery-validation": "^1.19.0",
         "moment": "^2.24.0",
-        "validator": "^11.0.0"
+        "validator": "^11.0.0",
+        "vee-validate": "^2.2.11"
     }
 }

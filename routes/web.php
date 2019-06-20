@@ -21,6 +21,8 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 Route::get('/test','ProjectController@getTest')->name('get.test');  
+Route::get('/getForm','ProjectController@getForm')->name('get.form');  
+Route::post('/postForm','ProjectController@postForm')->name('post.form');  
 // Auth route
 Route::middleware(['guest'])->group(function () {
     Route::get('/register', function () {

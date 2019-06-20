@@ -37,4 +37,14 @@ class ProjectController extends Controller
         ];
         return response()->json($test);
     }
+
+    public function getForm(Request $request){
+        return view('contents.project.form');
+    }
+
+    public function postForm(Request $request){
+        // return view('contents.project.form');
+        return $request->all();
+        // return redirect()->route('get.form');
+    }
 }
