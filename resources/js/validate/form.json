@@ -1,0 +1,4 @@
+{
+    "firstname":"required|min:4",
+    "favourite":"required"
+}

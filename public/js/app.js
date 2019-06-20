@@ -1800,6 +1800,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vee_validate_dist_locale_th__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vee-validate/dist/locale/th */ "./node_modules/vee-validate/dist/locale/th.js");
 /* harmony import */ var vee_validate_dist_locale_th__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vee_validate_dist_locale_th__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _SubFormPageComponent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SubFormPageComponent */ "./resources/js/components/SubFormPageComponent.vue");
+/* harmony import */ var _validate_form_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../validate/form.json */ "./resources/js/validate/form.json");
+var _validate_form_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../validate/form.json */ "./resources/js/validate/form.json", 1);
 //
 //
 //
@@ -1813,6 +1815,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -1829,10 +1832,13 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize('th', vee_valida
   },
   props: ['postformurl', 'csrf_token'],
   data: function data() {
-    return {};
+    return {
+      validateForm: _validate_form_json__WEBPACK_IMPORTED_MODULE_3__
+    };
   },
   mounted: function mounted() {
     console.log(this.postformurl);
+    console.log("validateForm", this.validateForm['firstname']);
   },
   methods: {
     onSubmitFormPage: function onSubmitFormPage(e) {
@@ -1876,8 +1882,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['csrf_token'],
-  inject: ['$validator']
+  props: ['csrf_token', 'validateform'],
+  data: function data() {
+    return {
+      favourite: "",
+      validateformStatic: {}
+    };
+  },
+  mounted: function mounted() {
+    this.validateformStatic = this.validateform;
+    console.log("this.validateformStatic", this.validateformStatic);
+  },
+  inject: ['$validator'],
+  watch: {
+    favourite: function favourite(val) {
+      if (val == "xxx") {
+        this.validateform['firstname'] = 'required|min:5';
+      } else {
+        this.validateform['firstname'] = this.validateformStatic['firstname'];
+      }
+
+      console.log(this.validateformStatic['firstname']);
+      console.log(this.validateform['firstname']);
+    }
+  }
 });
 
 /***/ }),
@@ -66611,7 +66639,9 @@ var render = function() {
         on: { submit: _vm.onSubmitFormPage }
       },
       [
-        _c("SubFormPage", { attrs: { csrf_token: _vm.csrf_token } }),
+        _c("SubFormPage", {
+          attrs: { csrf_token: _vm.csrf_token, validateform: _vm.validateForm }
+        }),
         _vm._v(" "),
         _c(
           "button",
@@ -66656,14 +66686,15 @@ var render = function() {
         {
           name: "validate",
           rawName: "v-validate",
-          value: "required|min:3",
-          expression: "'required|min:3'"
+          value: _vm.validateform["firstname"],
+          expression: "validateform['firstname']"
         }
       ],
       staticClass: "form-control",
       attrs: {
         type: "text",
         name: "firstname",
+        "data-valid": _vm.validateform["firstname"],
         "data-vv-as": "ชื่อจริง",
         placeholder: "firstname"
       }
@@ -66678,6 +66709,12 @@ var render = function() {
     _c("input", {
       directives: [
         {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.favourite,
+          expression: "favourite"
+        },
+        {
           name: "validate",
           rawName: "v-validate",
           value: "required",
@@ -66690,6 +66727,15 @@ var render = function() {
         name: "favourite",
         "data-vv-as": "สิ่งที่ชอบ",
         placeholder: "favourite"
+      },
+      domProps: { value: _vm.favourite },
+      on: {
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.favourite = $event.target.value
+        }
       }
     }),
     _vm._v(" "),
@@ -79223,6 +79269,17 @@ console.log(currentDateTime); // localStorage.clear();
 // };
 // localStorage.setItem('datas',JSON.stringify(res));
 // localStorage.setItem("name", "bossza")
+
+/***/ }),
+
+/***/ "./resources/js/validate/form.json":
+/*!*****************************************!*\
+  !*** ./resources/js/validate/form.json ***!
+  \*****************************************/
+/*! exports provided: firstname, favourite, default */
+/***/ (function(module) {
+
+module.exports = {"firstname":"required|min:4","favourite":"required"};
 
 /***/ }),
 

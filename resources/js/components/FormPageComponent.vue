@@ -6,7 +6,7 @@
             </li>
         </ul>
         <form method="post" id="formPageTest" :action="postformurl" @submit="onSubmitFormPage">
-            <SubFormPage :csrf_token="csrf_token"></SubFormPage>
+            <SubFormPage :csrf_token="csrf_token" :validateform="validateForm"></SubFormPage>
             <button class="btn btn-success" type="submit">Submit</button>
         </form>
     </div>
@@ -15,6 +15,7 @@
     import VeeValidate,{ Validator } from 'vee-validate';
     import th from 'vee-validate/dist/locale/th';
     import SubFormPage from './SubFormPageComponent';
+    import json from '../validate/form.json';
     Vue.use(VeeValidate);
     Validator.localize('th',th);
     export default {
@@ -31,10 +32,12 @@
         ],
         data(){
             return {
+                validateForm:json
             }
         },
         mounted() {
             console.log(this.postformurl);
+            console.log("validateForm",this.validateForm['firstname']);
         },
         methods:{
             onSubmitFormPage(e){
