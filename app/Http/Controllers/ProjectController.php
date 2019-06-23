@@ -20,6 +20,29 @@ class ProjectController extends Controller
         //     'finish_at' => $now->add(30,'day')->format('Y-m-d H:i:s')
         // ];
         // $project = Project::create($input);
+        
+        // $datas = [
+        //     "accountInfo"=>[
+        //         "name"=>'bossza',
+        //         "age"=>25,
+        //         "maxz"=>null,
+        //         "contact_address"=>[
+        //             "house_no"=>012232,
+        //             "district"=>'mung',
+        //             "max"=>[
+        //                 'sa','fff','we','hggd'
+        //             ]
+        //         ],
+        //         "lists"=>[1,4,556,24,632,2,23]
+        //     ],
+        //     "province"=>'bk'
+        // ];
+        // $dd = ['sa','hh'];
+        // $vals = array_get($datas,'');
+        // // echo 'val  is '.$vals.'<br>';
+        // echo 'type is '.gettype($vals).'<br>';
+        // return $vals;
+        
         $projects = Project::get();
         $data = [
             'projects' => $projects

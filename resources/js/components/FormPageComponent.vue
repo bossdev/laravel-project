@@ -6,18 +6,36 @@
             </li>
         </ul>
         <form method="post" id="formPageTest" :action="postformurl" @submit="onSubmitFormPage">
-            <SubFormPage :csrf_token="csrf_token" :validateform="validateForm"></SubFormPage>
+            <SubFormPage :csrf_token="csrf_token"></SubFormPage>
             <button class="btn btn-success" type="submit">Submit</button>
         </form>
     </div>
 </template>
 <script>
     import VeeValidate,{ Validator } from 'vee-validate';
+    import {customRules} from '../validate/form';
     import th from 'vee-validate/dist/locale/th';
     import SubFormPage from './SubFormPageComponent';
-    import json from '../validate/form.json';
+
     Vue.use(VeeValidate);
     Validator.localize('th',th);
+    for(let x in customRules){
+        console.log(x,customRules[x]);
+        Validator.extend(x,customRules[x]);
+    }
+    // Validator.extend('custom-fav',{
+    //     getMessage(field, val) {
+    //         return field+' does not '+val;
+    //     },
+    //     validate(value, field) {
+    //         // if(value=='xxx'){
+    //         //     return false;
+    //         // }
+    //         // return true;
+    //         return false;
+    //     }
+    // });
+    
     export default {
         components: {
             SubFormPage
@@ -32,12 +50,9 @@
         ],
         data(){
             return {
-                validateForm:json
             }
         },
         mounted() {
-            console.log(this.postformurl);
-            console.log("validateForm",this.validateForm['firstname']);
         },
         methods:{
             onSubmitFormPage(e){
@@ -58,8 +73,5 @@
 <style scoped>
     #formPageTest{
         width:400px;
-    }
-    #formPageTest input{
-        margin-bottom: 10px;
     }
 </style>

@@ -1797,11 +1797,10 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vee_validate__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vee-validate */ "./node_modules/vee-validate/dist/vee-validate.esm.js");
-/* harmony import */ var vee_validate_dist_locale_th__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vee-validate/dist/locale/th */ "./node_modules/vee-validate/dist/locale/th.js");
-/* harmony import */ var vee_validate_dist_locale_th__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vee_validate_dist_locale_th__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _SubFormPageComponent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SubFormPageComponent */ "./resources/js/components/SubFormPageComponent.vue");
-/* harmony import */ var _validate_form_json__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../validate/form.json */ "./resources/js/validate/form.json");
-var _validate_form_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../validate/form.json */ "./resources/js/validate/form.json", 1);
+/* harmony import */ var _validate_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../validate/form */ "./resources/js/validate/form.js");
+/* harmony import */ var vee_validate_dist_locale_th__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vee-validate/dist/locale/th */ "./node_modules/vee-validate/dist/locale/th.js");
+/* harmony import */ var vee_validate_dist_locale_th__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vee_validate_dist_locale_th__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _SubFormPageComponent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./SubFormPageComponent */ "./resources/js/components/SubFormPageComponent.vue");
 //
 //
 //
@@ -1820,10 +1819,28 @@ var _validate_form_json__WEBPACK_IMPORTED_MODULE_3___namespace = /*#__PURE__*/__
 
 
 Vue.use(vee_validate__WEBPACK_IMPORTED_MODULE_0__["default"]);
-vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize('th', vee_validate_dist_locale_th__WEBPACK_IMPORTED_MODULE_1___default.a);
+vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize('th', vee_validate_dist_locale_th__WEBPACK_IMPORTED_MODULE_2___default.a);
+
+for (var x in _validate_form__WEBPACK_IMPORTED_MODULE_1__["customRules"]) {
+  console.log(x, _validate_form__WEBPACK_IMPORTED_MODULE_1__["customRules"][x]);
+  vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].extend(x, _validate_form__WEBPACK_IMPORTED_MODULE_1__["customRules"][x]);
+} // Validator.extend('custom-fav',{
+//     getMessage(field, val) {
+//         return field+' does not '+val;
+//     },
+//     validate(value, field) {
+//         // if(value=='xxx'){
+//         //     return false;
+//         // }
+//         // return true;
+//         return false;
+//     }
+// });
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    SubFormPage: _SubFormPageComponent__WEBPACK_IMPORTED_MODULE_2__["default"]
+    SubFormPage: _SubFormPageComponent__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   provide: function provide() {
     return {
@@ -1832,14 +1849,9 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize('th', vee_valida
   },
   props: ['postformurl', 'csrf_token'],
   data: function data() {
-    return {
-      validateForm: _validate_form_json__WEBPACK_IMPORTED_MODULE_3__
-    };
+    return {};
   },
-  mounted: function mounted() {
-    console.log(this.postformurl);
-    console.log("validateForm", this.validateForm['firstname']);
-  },
+  mounted: function mounted() {},
   methods: {
     onSubmitFormPage: function onSubmitFormPage(e) {
       var _this = this;
@@ -1871,6 +1883,8 @@ vee_validate__WEBPACK_IMPORTED_MODULE_0__["Validator"].localize('th', vee_valida
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _validate_form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../validate/form */ "./resources/js/validate/form.js");
+/* harmony import */ var _mixins_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../mixins/form */ "./resources/js/mixins/form.js");
 //
 //
 //
@@ -1881,31 +1895,65 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['csrf_token', 'validateform'],
+  mixins: [_mixins_form__WEBPACK_IMPORTED_MODULE_1__["default"]],
+  props: ['csrf_token'],
   data: function data() {
     return {
       favourite: "",
-      validateformStatic: {}
+      firstname: "",
+      validateRule: _validate_form__WEBPACK_IMPORTED_MODULE_0__["default"],
+      dataObj: {
+        accountInfo: {
+          name: 'bossza',
+          age: 25,
+          maxz: null,
+          contact_address: {
+            house_no: 12232,
+            district: 'mung',
+            max: ['sa', 'fff', 'we', 'hggd']
+          }
+        },
+        province: 'bk'
+      }
     };
   },
-  mounted: function mounted() {
-    this.validateformStatic = this.validateform;
-    console.log("this.validateformStatic", this.validateformStatic);
-  },
-  inject: ['$validator'],
-  watch: {
-    favourite: function favourite(val) {
-      if (val == "xxx") {
-        this.validateform['firstname'] = 'required|min:5';
-      } else {
-        this.validateform['firstname'] = this.validateformStatic['firstname'];
-      }
-
-      console.log(this.validateformStatic['firstname']);
-      console.log(this.validateform['firstname']);
+  methods: {
+    dataGetda: function dataGetda() {
+      console.log('dataaa');
     }
-  }
+  },
+  mounted: function mounted() {// let dataObj = {
+    //     accountInfo:{
+    //         name:'bossza',
+    //         age:25,
+    //         maxz:null,
+    //         contact_address:{
+    //             house_no:12232,
+    //             district:'mung',
+    //             max:[
+    //                 'sa','fff','we','hggd'
+    //             ]
+    //         }
+    //     },
+    //     province:'bk'
+    // }
+    // let dd = 'house_no';
+    // console.log('data is',this.objNestedGet(dataObj,'accountInfo.contact_address.'+dd));
+  },
+  watch: {
+    favourite: function favourite(val) {// console.log('fav',val);
+      // if(val=='yyy'){
+      //     // this.validateRule.firstname.min = 8;
+      //     let ruleFirstname = this.validateRule.firstname;
+      //     ruleFirstname['min'] = 10;
+      //     this.validateRule.firstname = ruleFirstname;
+      // }
+    }
+  },
+  inject: ['$validator']
 });
 
 /***/ }),
@@ -6367,7 +6415,26 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#formPageTest[data-v-2617a4ef]{\n    width:400px;\n}\n#formPageTest input[data-v-2617a4ef]{\n    margin-bottom: 10px;\n}\n", ""]);
+exports.push([module.i, "\n#formPageTest[data-v-2617a4ef]{\n    width:400px;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/SubFormPageComponent.vue?vue&type=style&index=0&lang=css&":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/SubFormPageComponent.vue?vue&type=style&index=0&lang=css& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n#formPageTest input{\n    margin-bottom: 10px;\n}\n", ""]);
 
 // exports
 
@@ -54850,6 +54917,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/SubFormPageComponent.vue?vue&type=style&index=0&lang=css&":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--7-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/SubFormPageComponent.vue?vue&type=style&index=0&lang=css& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--7-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--7-2!../../../node_modules/vue-loader/lib??vue-loader-options!./SubFormPageComponent.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/SubFormPageComponent.vue?vue&type=style&index=0&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/lib/addStyles.js":
 /*!****************************************************!*\
   !*** ./node_modules/style-loader/lib/addStyles.js ***!
@@ -66639,9 +66736,7 @@ var render = function() {
         on: { submit: _vm.onSubmitFormPage }
       },
       [
-        _c("SubFormPage", {
-          attrs: { csrf_token: _vm.csrf_token, validateform: _vm.validateForm }
-        }),
+        _c("SubFormPage", { attrs: { csrf_token: _vm.csrf_token } }),
         _vm._v(" "),
         _c(
           "button",
@@ -66684,19 +66779,35 @@ var render = function() {
     _c("input", {
       directives: [
         {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.firstname,
+          expression: "firstname"
+        },
+        {
           name: "validate",
           rawName: "v-validate",
-          value: _vm.validateform["firstname"],
-          expression: "validateform['firstname']"
+          value: _vm.validateRule["firstname"],
+          expression: "validateRule['firstname']"
         }
       ],
       staticClass: "form-control",
       attrs: {
         type: "text",
         name: "firstname",
-        "data-valid": _vm.validateform["firstname"],
+        "data-vv-validate-on": "blur",
+        "data-valid": _vm.validateRule["firstname"],
         "data-vv-as": "ชื่อจริง",
         placeholder: "firstname"
+      },
+      domProps: { value: _vm.firstname },
+      on: {
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.firstname = $event.target.value
+        }
       }
     }),
     _vm._v(" "),
@@ -66717,14 +66828,15 @@ var render = function() {
         {
           name: "validate",
           rawName: "v-validate",
-          value: "required",
-          expression: "'required'"
+          value: _vm.validateRule["favourite"],
+          expression: "validateRule['favourite']"
         }
       ],
       staticClass: "form-control",
       attrs: {
         type: "text",
         name: "favourite",
+        "data-vv-validate-on": "blur",
         "data-vv-as": "สิ่งที่ชอบ",
         placeholder: "favourite"
       },
@@ -79159,7 +79271,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _SubFormPageComponent_vue_vue_type_template_id_76a37b56___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SubFormPageComponent.vue?vue&type=template&id=76a37b56& */ "./resources/js/components/SubFormPageComponent.vue?vue&type=template&id=76a37b56&");
 /* harmony import */ var _SubFormPageComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SubFormPageComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/SubFormPageComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _SubFormPageComponent_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SubFormPageComponent.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/SubFormPageComponent.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -79167,7 +79281,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _SubFormPageComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _SubFormPageComponent_vue_vue_type_template_id_76a37b56___WEBPACK_IMPORTED_MODULE_0__["render"],
   _SubFormPageComponent_vue_vue_type_template_id_76a37b56___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -79199,6 +79313,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/SubFormPageComponent.vue?vue&type=style&index=0&lang=css&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/SubFormPageComponent.vue?vue&type=style&index=0&lang=css& ***!
+  \*******************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SubFormPageComponent_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader??ref--7-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--7-2!../../../node_modules/vue-loader/lib??vue-loader-options!./SubFormPageComponent.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/SubFormPageComponent.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SubFormPageComponent_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SubFormPageComponent_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SubFormPageComponent_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SubFormPageComponent_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_7_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SubFormPageComponent_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
 /***/ "./resources/js/components/SubFormPageComponent.vue?vue&type=template&id=76a37b56&":
 /*!*****************************************************************************************!*\
   !*** ./resources/js/components/SubFormPageComponent.vue?vue&type=template&id=76a37b56& ***!
@@ -79225,6 +79355,71 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports) {
 
 $(function () {// $("div").fadeOut(3000);
+});
+
+/***/ }),
+
+/***/ "./resources/js/mixins/form.js":
+/*!*************************************!*\
+  !*** ./resources/js/mixins/form.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    objNestedGet: function objNestedGet(obj, keys, defaultVal) {
+      if (typeof defaultVal == 'undefined') {
+        defaultVal = null;
+      }
+
+      if (_typeof(obj) != 'object') {
+        return defaultVal;
+      }
+
+      if (obj[keys]) {
+        return obj[keys];
+      }
+
+      if (_typeof(obj) == 'object' && typeof keys == 'string') {
+        var keyNests = keys.split(".");
+        var _iteratorNormalCompletion = true;
+        var _didIteratorError = false;
+        var _iteratorError = undefined;
+
+        try {
+          for (var _iterator = keyNests[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+            var nest = _step.value;
+
+            if (_typeof(obj) == 'object' && typeof obj[nest] != 'undefined') {
+              obj = obj[nest];
+            } else {
+              return defaultVal;
+            }
+          }
+        } catch (err) {
+          _didIteratorError = true;
+          _iteratorError = err;
+        } finally {
+          try {
+            if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+              _iterator["return"]();
+            }
+          } finally {
+            if (_didIteratorError) {
+              throw _iteratorError;
+            }
+          }
+        }
+      }
+
+      return obj;
+    }
+  }
 });
 
 /***/ }),
@@ -79272,14 +79467,46 @@ console.log(currentDateTime); // localStorage.clear();
 
 /***/ }),
 
-/***/ "./resources/js/validate/form.json":
-/*!*****************************************!*\
-  !*** ./resources/js/validate/form.json ***!
-  \*****************************************/
-/*! exports provided: firstname, favourite, default */
-/***/ (function(module) {
+/***/ "./resources/js/validate/form.js":
+/*!***************************************!*\
+  !*** ./resources/js/validate/form.js ***!
+  \***************************************/
+/*! exports provided: default, customRules */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = {"firstname":"required|min:4","favourite":"required"};
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "customRules", function() { return customRules; });
+/* harmony default export */ __webpack_exports__["default"] = ({
+  // firstname:"required|min:4",
+  // favourite:"required|custom-fav:xxx,vfg"
+  firstname: {
+    required: true,
+    min: 4
+  },
+  favourite: {
+    required: true,
+    'custom-fav': 'xxx'
+  }
+});
+var customRules = {
+  'custom-fav': {
+    getMessage: function getMessage(field, val) {
+      console.log(field, val);
+      return field + ' ห้ามเป็น ' + val;
+    },
+    validate: function validate(value, field) {
+      console.log(value, field); // for(let x of field){
+
+      if (value == field) {
+        return false;
+      } // }
+
+
+      return true;
+    }
+  }
+};
 
 /***/ }),
 
